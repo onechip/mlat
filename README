@@ -1,0 +1,51 @@
+Measure latency of RAM by performing pseudo-random lookups.
+
+This program fills a buffer of a specified size with pseudo-random bytes,
+using random(), and then does lookups in that buffer where the address of
+each subsequent lookup depends on the bytes retrieved during the previous
+lookup.  The effect of pre-fetching is also tested.
+
+
+COMPILING:
+
+  cmake .
+  make
+
+
+RUNNING:
+
+  $ ./mlat 64
+
+  buffer size: 64 MiB
+
+  starting basic test...
+  latency: 24ns [50422]
+
+  starting prefetch[2] test...
+  latency: 48ns [44708]
+
+  starting prefetch[3] test...
+  latency: 33ns [12054]
+
+  starting prefetch[4] test...
+  latency: 25ns [20943]
+
+  starting prefetch[6] test...
+  latency: 18ns [29819]
+
+  starting prefetch[8] test...
+  latency: 15ns [5611]
+
+  starting prefetch[12] test...
+  latency: 13ns [27279]
+
+  starting prefetch[16] test...
+  latency: 12ns [25448]
+
+The arbitrary number is square brackets (e.g. [25448]) should be ignored.  It
+is printed out just to ensure the compiler does not optimize away the main
+loop.  
+
+The other number of in square brackets (e.g. prefetch[12]) is the depth of the
+prefetching.
+
